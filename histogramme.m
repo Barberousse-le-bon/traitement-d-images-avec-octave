@@ -1,8 +1,8 @@
-function histogramme(image)
+function histo = histogramme(image)
 
   taille = size(image);
 
-  width = taille(2)
+  width = taille(2);
   height = taille(1);
 
   valeurs = zeros(1,256);
@@ -22,5 +22,8 @@ function histogramme(image)
 
   figure(3);
   plot(valeurs);
+  histo = valeurs;
+
+  return;
 
   endfunction

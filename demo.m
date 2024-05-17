@@ -2,13 +2,9 @@
 %
 clear all; close all;
 %
-
-
-
 %  lecture et affichage d'une image:
 nom=input('Entrer le nom image avec le format jpg, bmp ou tif :','s'); % l'image doit être dans le répertoire
 a=imread(nom);
-
 %{
 figure(1);
 subplot(2,2,1);
@@ -36,9 +32,14 @@ colormap(gray);
 
 
 
-histogramme(image);
+%histogramme(image);
 
 
+%binarisation(image,108);
+
+
+seuil = seuillage(image,1);
+binarisation(image,seuil);
 
 
 
