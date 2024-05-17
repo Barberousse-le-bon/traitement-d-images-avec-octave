@@ -20,8 +20,6 @@ function histo = histogramme(image)
     endfor
   endfor
 
-  figure(3);
-  plot(valeurs);
   histo = valeurs;
 
   return;

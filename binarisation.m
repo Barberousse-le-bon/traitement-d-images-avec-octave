@@ -1,4 +1,4 @@
-function binarisation(image, seuil)
+function image_bin =  binarisation(image, seuil)
 
 
   taille = size(image);
@@ -25,11 +25,8 @@ function binarisation(image, seuil)
     endfor
   endfor
 
-figure(4);
-imagesc(image, [min(min(image)) max(max(image))]);
-colormap(gray);
-
-
+  image_bin = image;
+  return;
 
 
 

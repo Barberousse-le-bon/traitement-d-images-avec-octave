@@ -32,14 +32,24 @@ colormap(gray);
 
 
 
+%plot(histogramme(image));
 %histogramme(image);
-
 
 %binarisation(image,108);
 
 
-seuil = seuillage(image,1);
-binarisation(image,seuil);
+%seuil = seuillage(image,1);
+%img = binarisation(image,seuil);
+%binarisation(image,seuil);
+
+%figure(4);
+%imagesc(img, [min(min(image)) max(max(image))]);
+%colormap(gray);
+
+contours(image);
+
+
+
 
 
 
