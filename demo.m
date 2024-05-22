@@ -5,7 +5,7 @@ clear all; close all;
 %  lecture et affichage d'une image:
 nom=input('Entrer le nom image avec le format jpg, bmp ou tif :','s'); % l'image doit être dans le répertoire
 a=imread(nom);
-%{
+
 figure(1);
 subplot(2,2,1);
 imagesc(a);
@@ -21,7 +21,7 @@ imagesc(vert, [min(min(vert)) max(max(vert))]);
 subplot(2,2,4);
 imagesc(bleu, [min(min(bleu)) max(max(bleu))]);
 colormap(gray);
-%}
+
 %
 % Transformation image couleur en une image niveaux de gris:
 %
@@ -32,19 +32,19 @@ colormap(gray);
 
 
 
-%plot(histogramme(image));
-%histogramme(image);
+plot(histogramme(image));
+histogramme(image);
 
 %binarisation(image,108);
 
 
-%seuil = seuillage(image,1);
-%img = binarisation(image,seuil);
+seuil = seuillage(image,1);
+img = binarisation(image,seuil);
 %binarisation(image,seuil);
 
-%figure(4);
-%imagesc(img, [min(min(image)) max(max(image))]);
-%colormap(gray);
+figure(4);
+imagesc(img, [min(min(image)) max(max(image))]);
+colormap(gray);
 
 contours(image);
 
