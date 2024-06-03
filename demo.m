@@ -7,47 +7,52 @@ nom=input('Entrer le nom image avec le format jpg, bmp ou tif :','s'); % l'image
 a=imread(nom);
 
 figure(1);
-subplot(2,2,1);
+%subplot(2,2,1);
 imagesc(a);
 
 % transformation image en niveau de gris:
-rouge=double(a(:,:,1));
-vert=double(a(:,:,2));
-bleu=double(a(:,:,3));
-subplot(2,2,2);
-imagesc(rouge, [min(min(rouge)) max(max(rouge))]);
-subplot(2,2,3);
-imagesc(vert, [min(min(vert)) max(max(vert))]);
-subplot(2,2,4);
-imagesc(bleu, [min(min(bleu)) max(max(bleu))]);
-colormap(gray);
+%rouge=double(a(:,:,1));
+%vert=double(a(:,:,2));
+%bleu=double(a(:,:,3));
+%subplot(2,2,2);
+%imagesc(rouge, [min(min(rouge)) max(max(rouge))]);
+%subplot(2,2,3);
+%imagesc(vert, [min(min(vert)) max(max(vert))]);
+%subplot(2,2,4);
+%imagesc(bleu, [min(min(bleu)) max(max(bleu))]);
+%colormap(gray);
 
 %
 % Transformation image couleur en une image niveaux de gris:
 %
 image=double(rgb2gray(a));
-figure(2);
-imagesc(image, [min(min(image)) max(max(image))]);
+%figure(2);
+%imagesc(image, [min(min(image)) max(max(image))]);
+%colormap(gray);
+
+petiteimg = double(petiteImage());
+figure()
+imshow(petiteimg)
+plot(histogramme(petiteimg));
+histogramme(petiteimg);
+
+binarisation(petiteimg,108);
+
+
+seuil = seuillage(petiteimg,1);
+img = binarisation(petiteimg,seuil);
+binarisation(petiteimg,seuil);
+
+figure();
+imagesc(img, [min(min(petiteimg)) max(max(petiteimg))]);
 colormap(gray);
 
+%contours(image);
 
 
-plot(histogramme(image));
-histogramme(image);
-
-%binarisation(image,108);
-
-
-seuil = seuillage(image,1);
-img = binarisation(image,seuil);
-%binarisation(image,seuil);
-
-figure(4);
-imagesc(img, [min(min(image)) max(max(image))]);
-colormap(gray);
-
-contours(image);
-
+fft = transfoFourier(petiteimg);
+  figure(5);
+  imshow(fft,[]);
 
 
 
