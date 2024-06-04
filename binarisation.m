@@ -3,7 +3,7 @@ function image_bin =  binarisation(image, seuil)
 
   taille = size(image);
 
-  width = taille(2)
+  width = taille(2);
   height = taille(1);
 
   for w = 1:width

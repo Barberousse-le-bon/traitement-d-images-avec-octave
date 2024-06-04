@@ -7,7 +7,7 @@ nom=input('Entrer le nom image avec le format jpg, bmp ou tif :','s'); % l'image
 a=imread(nom);
 
 figure(1);
-%subplot(2,2,1);
+subplot(2,2,1);
 imagesc(a);
 
 % transformation image en niveau de gris:
@@ -39,7 +39,7 @@ histogramme(petiteimg);
 binarisation(petiteimg,108);
 
 
-seuil = seuillage(petiteimg,1);
+seuil = seuillage(petiteimg);
 img = binarisation(petiteimg,seuil);
 binarisation(petiteimg,seuil);
 

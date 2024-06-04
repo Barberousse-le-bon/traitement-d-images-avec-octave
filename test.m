@@ -1,63 +1,40 @@
-close all;
-clear all;
+pkg load image;
 
-function [] = fourier2d(img, fe)
-  dim = size(img);
+% Chargement de l'image
+image = imread('imagesTP/confiserie-smarties-lentilles_121-50838.jpg');
 
-  % Calcul de la transformée de Fourier 2D et centrage des basses fréquences
-  f = abs(fftshift(fft2(img)));
+% Conversion de l'image en espace de couleur HSV
+image_hsv = rgb2hsv(image);
 
-  % Calcul des indices pour les axes des fréquences
-  n = dim(2) / 2;
-  m = dim(1) / 2;
+% Définition des plages de valeurs HSV pour le bleu
+seuil_min_bleu = [0.55, 0.2, 0.2];
+seuil_max_bleu = [0.75, 1, 1];
 
-  % Création des vecteurs d'axes en fréquence
-  x = fe * (-n:n-1) / dim(2);
-  y = fe * (-m:m-1) / dim(1);
+% Application du seuillage pour détecter le bleu
+masque_bleu = (image_hsv(:,:,1) >= seuil_min_bleu(1)) & (image_hsv(:,:,1) <= seuil_max_bleu(1)) & ...
+              (image_hsv(:,:,2) >= seuil_min_bleu(2)) & (image_hsv(:,:,2) <= seuil_max_bleu(2)) & ...
+              (image_hsv(:,:,3) >= seuil_min_bleu(3)) & (image_hsv(:,:,3) <= seuil_max_bleu(3));
 
-  % Affichage du spectre en 3D
-  figure();
-  surf(x, -y, sqrt(f));
-  title("Spectre - 1");
-  xlabel("Fx");
-  ylabel("Fy");
-  zlabel("Amplitude");
+% Définition des plages de valeurs HSV pour le jaune
+seuil_min_jaune = [0.1, 0.2, 0.2];
+seuil_max_jaune = [0.3, 1, 1];
 
-  % Affichage du spectre en contour
-  figure();
-  contourf(x, -y, log(5*f + 1));
-  title("Spectre - 2");
-  xlabel("Fx");
-  ylabel("Fy");
-endfunction
+% Application du seuillage pour détecter le jaune
+masque_jaune = (image_hsv(:,:,1) >= seuil_min_jaune(1)) & (image_hsv(:,:,1) <= seuil_max_jaune(1)) & ...
+               (image_hsv(:,:,2) >= seuil_min_jaune(2)) & (image_hsv(:,:,2) <= seuil_max_jaune(2)) & ...
+               (image_hsv(:,:,3) >= seuil_min_jaune(3)) & (image_hsv(:,:,3) <= seuil_max_jaune(3));
 
-function [img] = atom(n, m, fx, fy)
-  e1 = exp(i * 2 * pi * fx * (0:m-1));
-  e2 = exp(i * 2 * pi * fy * (0:n-1));
-  img = real(e2' * e1);
-endfunction
+% Appliquer les masques binaires à l'image d'origine pour extraire les couleurs
+image_bleue = bsxfun(@times, image, cast(masque_bleu, 'like', image));
+image_jaune = bsxfun(@times, image, cast(masque_jaune, 'like', image));
 
-fe = 1;
+% Afficher les images résultantes
+figure;
+subplot(1, 2, 1);
+imshow(image_bleue);
+title('Bleu');
 
-rupt0 = atom(500, 500, 0.01, 0);
-rupt1 = atom(500, 500, 0, 0.01);
-rupt2 = atom(500, 500, 0.01, 0.01);
-
-figure(1);
-imagesc(rupt0);
-title("Image rupt0");
-
-% Décommenter ces lignes si nécessaire
-% figure(2)
-% imagesc(rupt1);
-% title("Image rupt1");
-
-% figure(3)
-% imagesc(rupt2);
-% title("Image rupt2");
-
-% Calculer et afficher les spectres de Fourier
-% fourier2d(rupt0, fe);
-% fourier2d(rupt1, fe);
-fourier2d(rupt2, fe);
+subplot(1, 2, 2);
+imshow(image_jaune);
+title('Jaune');
 
