@@ -1,14 +1,19 @@
+clear all;
+close all;
+
 pkg load image;
 
 % Chargement de l'image
 image = imread('imagesTP/confiserie-smarties-lentilles_121-50838.jpg');
+figure()
+imagesc(image);
 
 % Conversion de l'image en espace de couleur HSV
 image_hsv = rgb2hsv(image);
 
 % Définition des plages de valeurs HSV pour le bleu
-seuil_min_bleu = [0.55, 0.2, 0.2];
-seuil_max_bleu = [0.75, 1, 1];
+seuil_min_bleu = [0.50, 0.2, 0.2];
+seuil_max_bleu = [0.66, 1, 1];
 
 % Application du seuillage pour détecter le bleu
 masque_bleu = (image_hsv(:,:,1) >= seuil_min_bleu(1)) & (image_hsv(:,:,1) <= seuil_max_bleu(1)) & ...
@@ -16,8 +21,8 @@ masque_bleu = (image_hsv(:,:,1) >= seuil_min_bleu(1)) & (image_hsv(:,:,1) <= seu
               (image_hsv(:,:,3) >= seuil_min_bleu(3)) & (image_hsv(:,:,3) <= seuil_max_bleu(3));
 
 % Définition des plages de valeurs HSV pour le jaune
-seuil_min_jaune = [0.1, 0.2, 0.2];
-seuil_max_jaune = [0.3, 1, 1];
+seuil_min_jaune = [0.15, 0.2, 0.2];
+seuil_max_jaune = [0.21, 1, 1];
 
 % Application du seuillage pour détecter le jaune
 masque_jaune = (image_hsv(:,:,1) >= seuil_min_jaune(1)) & (image_hsv(:,:,1) <= seuil_max_jaune(1)) & ...
@@ -29,12 +34,13 @@ image_bleue = bsxfun(@times, image, cast(masque_bleu, 'like', image));
 image_jaune = bsxfun(@times, image, cast(masque_jaune, 'like', image));
 
 % Afficher les images résultantes
-figure;
-subplot(1, 2, 1);
+figure();
+
 imshow(image_bleue);
 title('Bleu');
 
-subplot(1, 2, 2);
+figure()
+
 imshow(image_jaune);
 title('Jaune');
 
